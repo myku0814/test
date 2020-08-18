@@ -1,0 +1,54 @@
+body {
+    width: 70%;
+    padding: 1rem;
+    font-family: Microsoft JhengHei;
+}
+
+@media only screen and (min-width: 400px) {
+    body {
+        width: 375px;
+        margin: 0 auto;
+        background-color: rgb(206, 221, 221);
+    }
+}
+
+input {
+    width: 50%;
+    float: right;
+}
+
+div {
+    width: 80%;
+    margin-top: 1.5rem;
+}
+
+#drop-zone {
+    width: 40%;
+    border: 0.2rem dashed #BBB;
+    border-radius: 0.5rem;
+    padding: 30%;
+    text-align: center;
+    font-weight: bold;
+    color: rgb(54, 46, 46);
+}
+
+#download-btn {
+    border: 0.2rem ridge rgba(87, 72, 79, 0.719);
+    margin-top: 2.5rem;
+    padding: 0.1rem;
+    width: 30%;
+    background-color: rgba(137, 43, 226, 0.226);
+    cursor: grab;
+    text-align: center;
+    font-weight: bolder;
+}
+
+#fileNameLabel {
+    display: block;
+}
+
+#fileName {
+    float: left;
+    margin: 0.5rem auto;
+    display: block;
+}

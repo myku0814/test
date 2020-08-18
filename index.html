@@ -1,0 +1,30 @@
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="./src/main.css">
+</head>
+<body>
+    <!-- <input id="upload" type="file" multiple> -->
+    <div>
+        <label id="minLabel" for="xRangeMin">Xmin: 0</label>
+        <input type="number" id="min" class="range" name="xRangeMin">
+    </div>
+    <div>
+        <label id="maxLabel" for="xRangeMax">Xmax: 1090</label>
+        <input type="number" id="max" class="range" name="xRangeMax">
+    </div>
+
+    <div id="drop-zone">Drop file here...</div>
+    
+    <div>
+        <label id="fileNameLabel" for="fileName">fileName: default</label>
+        <input type="text" id="fileName" class="file" name="fileName">
+    </div>
+
+    <div id="download-btn">download btn</div>
+
+    <script src="./src/main.js"></script>
+</body>
+</html>
