@@ -126,6 +126,7 @@ function saveFile(content, file_name) {
 function extract(string) {
     let data = [];
     
+    // parse
     if(String(string).indexOf("[Data]") != -1) {
         data = String(string).slice(String(string).indexOf("[Data]")).split(/\s*\n\s*/).slice(2);
     } else {
