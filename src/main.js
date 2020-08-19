@@ -15,7 +15,7 @@
 // for drop
 // 需要定義 dragover 事件，並設定 preventDefault()
 // 如果沒有定義，會在觸發 Drop 事件之前就把檔案開啟了
-let _fileName = "";
+let _fileName = [];
 let _content = [];
 let xRangeMin = 0;
 let xRangeMax = 1090;
@@ -39,9 +39,9 @@ document.querySelectorAll('.range').forEach(el => {
 document.querySelectorAll('.file').forEach(el => {
     el.addEventListener('input', function(e) {
         if(e.target.id == 'fileName') {
-            _fileName = e.target.value;
-            document.getElementById('fileNameLabel').innerHTML = `fileName: <span style=\"color: green;\">${_fileName}</span>`;
-            console.log(`fileName: ${_fileName}`);
+            _fileName[1000] = e.target.value;
+            document.getElementById('fileNameLabel').innerHTML = `fileName: <span style=\"color: green;\">${_fileName[1000]}</span>`;
+            console.log(`fileName: ${_fileName[1000]}`);
         } else {
             console.log(`something wrong...\nthis is evt: ${e}`);
         }
@@ -96,7 +96,8 @@ document.querySelector('#drop-zone').addEventListener('drop', function (event) {
             console.log(`進度條: ${percentLoaded}`);
             }
         };
-  
+        console.log(String(filelist[i].name).slice(0, -4));
+        _fileName[i] = String(filelist[i].name).slice(0, -4);
         // 開始讀取檔案，以文字字串型式讀取資料
         reader.readAsText(filelist[i]);
     }
@@ -105,7 +106,12 @@ document.querySelector('#drop-zone').addEventListener('drop', function (event) {
 document.getElementById('download-btn').addEventListener('click', function(e) {
     _content.forEach((el, i) => {
         const content = el || "content_placeholder";
-        const fileName = (_fileName + "_" + String(i)) || "default";
+        let fileName = _fileName[1000] || (_fileName[i] + "_m");
+
+        if(fileName == _fileName[1000]) {
+            fileName += "_" + String(i);
+        }
+
         saveFile(content, fileName);
     });
 });
@@ -125,10 +131,11 @@ function saveFile(content, file_name) {
 
 function extract(string) {
     let data = [];
-    
+    let flag = false;
     // parse
     if(String(string).indexOf("[Data]") != -1) {
         data = String(string).slice(String(string).indexOf("[Data]")).split(/\s*\n\s*/).slice(2);
+        flag = true;
     } else {
         data = String(string).split(/\s*\n\s*/);
     }
@@ -149,10 +156,27 @@ function extract(string) {
         }
     });
 
-    console.log("-------");
+    console.log("---dataX, dataY----");
     console.log(dataX);
     console.log(dataY);
-    console.log("-------");
+    console.log("-------------------");
+
+    if(flag == true){
+        console.log("有額外東西的那份");
+        for(let i=0; i<dataY.length; i++) {
+            if(dataY[i] <= 0) {
+                dataY[i] = 0;
+            } else {
+                dataY[i] = Math.log(dataY[i]);
+            }
+        }
+    } else {
+        console.log("沒額外東西的那份");
+    }
+    
+    console.log("----取log的dataY---");
+    console.log(dataY);
+    console.log("-------------------");
 
     // 減掉最小值
     const smallest = Math.min(...dataY);
@@ -175,10 +199,6 @@ function extract(string) {
         el /= biggest;
         dataYscale.push(el);
     });
-
-    console.log("-------");
-    console.log(dataYscale);
-    console.log("-------");
     
     for(let i=0; i<dataX.length; i++) {
         result += dataX[i] + "\t" + dataYscale[i] + "\n"
