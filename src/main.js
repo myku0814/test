@@ -17,6 +17,7 @@
 // 如果沒有定義，會在觸發 Drop 事件之前就把檔案開啟了
 let _fileName = [];
 let _content = [];
+let _fileLength = 1;
 let xRangeMin = 0;
 let xRangeMax = 1090;
 
@@ -71,6 +72,7 @@ document.querySelector('#drop-zone').addEventListener('drop', function (event) {
 
     // 取得拖拉的檔案清單
     let filelist = event.dataTransfer.files;
+    _fileLength = filelist.length;
     console.log(filelist);
     for (let i = 0; i < filelist.length; i++) {  
         // 透過 FileReader 取得檔案內容
@@ -105,14 +107,16 @@ document.querySelector('#drop-zone').addEventListener('drop', function (event) {
 
 document.getElementById('download-btn').addEventListener('click', function(e) {
     _content.forEach((el, i) => {
-        const content = el || "content_placeholder";
-        let fileName = _fileName[1000] || (_fileName[i] + "_m");
+        if(i < _fileLength) {
+            const content = el || "content_placeholder";
+            let fileName = _fileName[1000] || (_fileName[i] + "_m");
 
-        if(fileName == _fileName[1000]) {
-            fileName += "_" + String(i);
+            if(fileName == _fileName[1000]) {
+                fileName = _fileName[i] + "_m_" + fileName;
+            }
+
+            saveFile(content, fileName);
         }
-
-        saveFile(content, fileName);
     });
 });
 
