@@ -112,7 +112,7 @@ document.getElementById('download-btn').addEventListener('click', function(e) {
             let fileName = _fileName[1000] || (_fileName[i] + "_m");
 
             if(fileName == _fileName[1000]) {
-                fileName = _fileName[i] + "_m_" + fileName;
+                fileName = _fileName[i] + "_" + fileName;
             }
 
             saveFile(content, fileName);
